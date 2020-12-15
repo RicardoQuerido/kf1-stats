@@ -1,0 +1,17 @@
+{
+  "name": "kf1-stats",
+  "version": "1.0.0",
+  "description": "Killing Floor ",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Ricardo Querido",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "express": "^4.17.1",
+    "format-number": "^3.0.0",
+    "path": "^0.12.7",
+    "pug": "^3.0.0",
+    "xml2json": "^0.12.0"
+  }
+}
