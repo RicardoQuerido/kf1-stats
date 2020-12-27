@@ -8,29 +8,41 @@ html
     link(rel="stylesheet" href="/style.css")
   body
     h1 My Killing Floor Stats
-    #table-wrapper
-    table
-      tr
-        th Class
-        th Points
-      tr
-        td Medic
-        td=medicPoints
-      tr
-        td Sharpshooter
-        td=sharpshooterPoints
-      tr
-        td Commando
-        td=commandoPoints
-      tr
-        td Support
-        td=supportPoints
-      tr
-        td Berseker
-        td=berserkerPoints
-      tr
-        td Firebug
-        td=firebugPoints
-      tr
-        td Demolitions
-        td=demolitionsPoints
+    hr
+    section.perks
+      h2 Perk Progress
+      hr
+      div
+        img.perk__img(src="images/perks/Perk_Medic.png" alt="Perk Medic")
+        h3.perk__name Medic
+        p.perk__points=medicPoints
+      div
+        img.perk__img(src="images/perks/Perk_Sharpshooter.png" alt="Perk Medic")
+        h3 Sharpshooter
+        p=sharpshooterPoints
+      div
+        img.perk__img(src="images/perks/Perk_Commando.png" alt="Perk Medic")
+        h3 Commando
+        p=commandoPoints
+      div
+        img.perk__img(src="images/perks/Perk_Support_specialist.png" alt="Perk Medic")
+        h3 Support
+        p=supportPoints
+      div
+        img.perk__img(src="images/perks/Perk_Berserker.png" alt="Perk Medic")
+        h3 Berseker
+        p=berserkerPoints
+      div
+        img.perk__img(src="images/perks/Perk_Firebug.png" alt="Perk Medic")
+        h3 Firebug
+        p=firebugPoints
+      div
+        img.perk__img(src="images/perks/Perk_Demolition.png" alt="Perk Medic")
+        h3 Demolitions
+        p=demolitionsPoints
+    section.stats
+     h2 General Stats
+      hr
+    section.achievments
+     h2 Achievment Progress
+      hr

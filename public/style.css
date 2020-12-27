@@ -1,29 +1,81 @@
 body {
     margin: 0;
-    padding: 0;
+    padding: 5em;
     box-sizing: border-box;
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    margin: auto;
+    background-attachment: fixed;
+    background-image: url("images/background.jpg");
+    background-color: grey;
+    background-blend-mode: darken;   
+    color: whitesmoke;
 }
 
-table {
-    width: 20rem;
-    border-collapse: collapse;
-    font-size: 1.5rem;
-}
-
-th {
-    background-color: whitesmoke;
-    text-align: left;
-}
-
-th,
-td {
-    border: 1px solid black;
+section {
     padding: 1em;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+    margin: 0;
+}
+
+p {
+    display: inline;
+    font-size: 1.2rem;
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+hr {
+    border: 1px solid whitesmoke;
+    width: 100%;
+}
+
+.perks {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.perks div {
+    flex: 0 1 45%;
+    padding: 1.5em;
+    margin: 1em auto;
+
+    background-color: grey;
+    color: black;
+    border: 2px solid darkslategrey;
+    border-radius: 5px;
+    box-shadow: 2px 1px 1px black;
+
+    display: grid;
+    grid-template-columns: 60px auto;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+    "pimg ptitle"
+    "pimg pprogress";
+    column-gap: 2em;
+    align-items: center;
+}
+
+.perk__img {
+    grid-area: pimg;
+}
+
+.perk__name {
+    grid-area: ptitle;
+}
+
+.perk__points {
+    grid-area: pprogress;
 }
