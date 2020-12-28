@@ -13,33 +13,82 @@ html
       h2 Perk Progress
       hr
       div
-        img.perk__img(src="images/perks/Perk_Medic.png" alt="Perk Medic")
-        h3.perk__name Medic
-        p.perk__points=medicPoints
+        div.perk__img
+          img(src="images/perks/Perk_Medic.png" alt="Perk Field Medic")
+        div.perk__info
+          div.perk__header
+            span.perk__name Field Medic
+            span.perk__level 3
+          div.perk__content
+            div.perk__bar
+              div.perk__progress#medic__progress
+            p.perk__points="Points Healed: " + medicPoints
       div
-        img.perk__img(src="images/perks/Perk_Sharpshooter.png" alt="Perk Medic")
-        h3 Sharpshooter
-        p=sharpshooterPoints
+        div.perk__img
+          img(src="images/perks/Perk_Support_specialist.png" alt="Perk Support Specialist")
+        div.perk__info
+          div.perk__header
+            span.perk__name Support Specialist
+            span.perk__level 4
+          div.perk__content
+            div.perk__bar
+              div.perk__progress#support__progress
+            p.perk__points="Damage Done: " + supportPoints
       div
-        img.perk__img(src="images/perks/Perk_Commando.png" alt="Perk Medic")
-        h3 Commando
-        p=commandoPoints
+        div.perk__img
+          img(src="images/perks/Perk_Sharpshooter.png" alt="Perk Sharpshooter")
+        div.perk__info
+          div.perk__header
+            span.perk__name Sharpshooter
+            span.perk__level 5
+          div.perk__content
+            div.perk__bar
+              div.perk__progress#sharpshooter__progress
+            p.perk__points="Headshots: " + sharpshooterPoints
       div
-        img.perk__img(src="images/perks/Perk_Support_specialist.png" alt="Perk Medic")
-        h3 Support
-        p=supportPoints
+        div.perk__img
+          img(src="images/perks/Perk_Commando.png" alt="Perk Commando")
+        div.perk__info
+          div.perk__header
+            span.perk__name Commando
+            span.perk__level 3
+          div.perk__content
+            div.perk__bar
+              div.perk__progress#commando__progress
+            p.perk__points="Damage Done: " + commandoPoints
       div
-        img.perk__img(src="images/perks/Perk_Berserker.png" alt="Perk Medic")
-        h3 Berseker
-        p=berserkerPoints
+        div.perk__img
+          img(src="images/perks/Perk_Berserker.png" alt="Perk Berserker")
+        div.perk__info
+          div.perk__header
+            span.perk__name Berserker
+            span.perk__level 4
+          div.perk__content
+            div.perk__bar
+              div.perk__progress#berserker__progress
+            p.perk__points="Points Healed: " + berserkerPoints
       div
-        img.perk__img(src="images/perks/Perk_Firebug.png" alt="Perk Medic")
-        h3 Firebug
-        p=firebugPoints
+        div.perk__img
+          img(src="images/perks/Perk_Firebug.png" alt="Perk Firebug")
+        div.perk__info
+          div.perk__header
+            span.perk__name Firebug
+            span.perk__level 3
+          div.perk__content
+            div.perk__bar
+              div.perk__progress#firebug__progress
+            p.perk__points="Points Healed: " + firebugPoints
       div
-        img.perk__img(src="images/perks/Perk_Demolition.png" alt="Perk Medic")
-        h3 Demolitions
-        p=demolitionsPoints
+        div.perk__img
+          img(src="images/perks/Perk_Demolition.png" alt="Perk Demolitions")
+        div.perk__info
+          div.perk__header
+            span.perk__name Demolitions
+            span.perk__level 3
+          div.perk__content
+            div.perk__bar
+              div.perk__progress#demolitions__progress
+            p.perk__points="Points Healed: " + demolitionsPoints
     section.stats
      h2 General Stats
       hr

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Killing Floor ",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start":"node app.js"
+  },
   "author": "Ricardo Querido",
   "license": "ISC",
   "dependencies": {
