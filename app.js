@@ -24,6 +24,7 @@ app.get('/', function (req, res) {
         .then(d => {
             const info = parser.toJson(d.data, parserOptions);
             const stats = info.statsfeed.stats.item;
+
             res.render('index', {
                 sharpshooterPoints: formatNumber(stats[4].value),
                 medicPoints: formatNumber(stats[1].value),
@@ -32,6 +33,13 @@ app.get('/', function (req, res) {
                 berserkerPoints: formatNumber(stats[7].value),
                 firebugPoints: formatNumber(stats[8].value),
                 demolitionsPoints: formatNumber(stats[20].value),
+                sharpshooterProgress: "2%",
+                commandoProgress: "2%",
+                supportProgress: "2%",
+                berserkerProgress: "2%",
+                firebugProgress: "2%",
+                medicProgress: "2%",
+                demolitionsProgress: "2%",
             })
         })
 });

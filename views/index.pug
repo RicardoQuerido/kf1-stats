@@ -5,7 +5,7 @@ html
     meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
     meta(name="theme-color", content="#000000")
     title KF1 Stats
-    link(rel="stylesheet" href="/style.css")
+    link(rel="stylesheet" href="styles/index.css")
   body
     h1 My Killing Floor Stats
     hr
@@ -18,10 +18,10 @@ html
         div.perk__info
           div.perk__header
             span.perk__name Field Medic
-            span.perk__level 3
+            span.perk__level Level 3
           div.perk__content
             div.perk__bar
-              div.perk__progress#medic__progress
+              div.perk__progress(style={width:medicProgress})
             p.perk__points="Points Healed: " + medicPoints
       div
         div.perk__img
@@ -29,10 +29,10 @@ html
         div.perk__info
           div.perk__header
             span.perk__name Support Specialist
-            span.perk__level 4
+            span.perk__level Level 4
           div.perk__content
             div.perk__bar
-              div.perk__progress#support__progress
+              div.perk__progress(style={width:supportProgress})
             p.perk__points="Damage Done: " + supportPoints
       div
         div.perk__img
@@ -40,10 +40,10 @@ html
         div.perk__info
           div.perk__header
             span.perk__name Sharpshooter
-            span.perk__level 5
+            span.perk__level Level 5
           div.perk__content
             div.perk__bar
-              div.perk__progress#sharpshooter__progress
+              div.perk__progress(style={width:sharpshooterProgress})
             p.perk__points="Headshots: " + sharpshooterPoints
       div
         div.perk__img
@@ -51,10 +51,10 @@ html
         div.perk__info
           div.perk__header
             span.perk__name Commando
-            span.perk__level 3
+            span.perk__level Level 3
           div.perk__content
             div.perk__bar
-              div.perk__progress#commando__progress
+              div.perk__progress(style={width:commandoProgress})
             p.perk__points="Damage Done: " + commandoPoints
       div
         div.perk__img
@@ -62,33 +62,33 @@ html
         div.perk__info
           div.perk__header
             span.perk__name Berserker
-            span.perk__level 4
+            span.perk__level Level 4
           div.perk__content
             div.perk__bar
-              div.perk__progress#berserker__progress
-            p.perk__points="Points Healed: " + berserkerPoints
+              div.perk__progress(style={width:berserkerProgress})
+            p.perk__points="Damage Done: " + berserkerPoints
       div
         div.perk__img
           img(src="images/perks/Perk_Firebug.png" alt="Perk Firebug")
         div.perk__info
           div.perk__header
             span.perk__name Firebug
-            span.perk__level 3
+            span.perk__level Level 3
           div.perk__content
             div.perk__bar
-              div.perk__progress#firebug__progress
-            p.perk__points="Points Healed: " + firebugPoints
+              div.perk__progress(style={width:firebugProgress})
+            p.perk__points="Damage Done: " + firebugPoints
       div
         div.perk__img
           img(src="images/perks/Perk_Demolition.png" alt="Perk Demolitions")
         div.perk__info
           div.perk__header
             span.perk__name Demolitions
-            span.perk__level 3
+            span.perk__level Level 3
           div.perk__content
             div.perk__bar
-              div.perk__progress#demolitions__progress
-            p.perk__points="Points Healed: " + demolitionsPoints
+              div.perk__progress(style={width:demolitionsProgress})
+            p.perk__points="Damage Done: " + demolitionsPoints
     section.stats
      h2 General Stats
       hr

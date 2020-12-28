@@ -8,7 +8,7 @@ body {
     flex-direction: column;
     justify-content: center;
     background-attachment: fixed;
-    background-image: url("images/background.jpg");
+    background-image: url("../images/background.jpg");
     background-color: grey;
     background-blend-mode: darken;   
     color: whitesmoke;
@@ -63,6 +63,7 @@ hr {
 }
 
 .perk__img {
+    margin: auto;
     padding: 0.75em 1.25em;
     background-color: #323232;
     border: 3px solid #68443A;
@@ -100,8 +101,4 @@ hr {
     background-color: #838182;
     width:0;
     height: 100%;
-}
-
-#medic__progress {
-    width:80%;
 }
