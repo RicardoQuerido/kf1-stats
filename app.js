@@ -6,7 +6,7 @@ const path = require("path");
 
 
 //----------------- PROCESSING ----------------------
-const perksInfo = {
+const perkLevelsInfo = {
     "medic": {
         primarySteps: [200, 750, 4000, 12000, 25000, 100000]
     },
@@ -14,7 +14,8 @@ const perksInfo = {
         primarySteps: [30, 100, 700, 2500, 7500, 8500]
     },
     "commando": {
-        primarySteps: [25000, 100000, 500000, 1500000, 3500000, 5500000]
+        primarySteps: [25000, 100000, 500000, 1500000, 3500000, 5500000],
+        secondarySteps: [30, 100, 350, 1200, 2400, 3600]
     },
     "support": {
         primarySteps: [25000, 100000, 500000, 1500000, 3500000, 5500000],
@@ -36,7 +37,7 @@ const minLevel = 0,
 
 getPerkLevel = (perkName, primaryPoints, secondaryPoints = null) => {
     let perkLevel = maxLevel;
-    const primarySteps = perksInfo[perkName].primarySteps;
+    const primarySteps = perkLevelsInfo[perkName].primarySteps;
 
     for (let level = 0; level < primarySteps.length; level++) {
         if (primarySteps[level] <= primaryPoints) continue;
@@ -46,7 +47,7 @@ getPerkLevel = (perkName, primaryPoints, secondaryPoints = null) => {
     }
 
     if (secondaryPoints) {
-        const secondarySteps = perksInfo[perkName].primarySteps;
+        const secondarySteps = perkLevelsInfo[perkName].secondarySteps;
         while (perkLevel >= minLevel) {
             if (secondarySteps[perkLevel] <= secondaryPoints) break;
             perkLevel -= 1;
@@ -54,6 +55,40 @@ getPerkLevel = (perkName, primaryPoints, secondaryPoints = null) => {
     }
 
     return perkLevel;
+}
+
+getLevelProgress = (perkName, level, primaryPoints, secondaryPoints = null) => {
+    let progress = 0;
+
+    if(level === 6) return 100; //TODO: view formula for this case
+
+    const primarySteps = perkLevelsInfo[perkName].primarySteps;
+    let currentLevelPoints, nextLevelPoints;    
+
+    if(level === 0) {
+        currentLevelPoints = 0; 
+        nextLevelPoints = primarySteps[0];
+    } else {
+        currentLevelPoints = primarySteps[level - 1]; 
+        nextLevelPoints = primarySteps[level];
+    }
+
+    progress += (primaryPoints - currentLevelPoints)/(nextLevelPoints - currentLevelPoints)
+
+    if (secondaryPoints) {
+        const secondarySteps = perkLevelsInfo[perkName].secondarySteps;
+        if(level === 0) {
+            currentLevelPoints = 0; 
+            nextLevelPoints = secondarySteps[0];
+        } else {
+            currentLevelPoints = secondarySteps[level - 1]; 
+            nextLevelPoints = secondarySteps[level];
+        }
+        progress += (secondaryPoints - currentLevelPoints)/(nextLevelPoints - currentLevelPoints);
+        progress /= 2;
+    }
+
+    return progress * 100;
 }
 
 
@@ -79,6 +114,7 @@ app.get('/', function (req, res) {
         .then(d => {
             const info = parser.toJson(d.data, parserOptions);
             const stats = info.statsfeed.stats.item;
+
             sharpshooterPoints = stats[4].value;
             medicPoints = stats[1].value;
             commandoPoints = stats[6].value;
@@ -86,6 +122,14 @@ app.get('/', function (req, res) {
             berserkerPoints = stats[7].value;
             firebugPoints = stats[8].value;
             demolitionsPoints = stats[20].value;
+
+            medicLevel = getPerkLevel("medic", medicPoints);
+            sharpshooterLevel = getPerkLevel("sharpshooter", sharpshooterPoints);
+            supportLevel = getPerkLevel("support", supportPoints);
+            commandoLevel = getPerkLevel("commando", commandoPoints);
+            berserkerLevel = getPerkLevel("berserker", berserkerPoints);
+            firebugLevel = getPerkLevel("firebug", firebugPoints);
+            demolitionsLevel = getPerkLevel("demolitions", demolitionsPoints);
 
             res.render('index', {
                 sharpshooterPoints: formatNumber(sharpshooterPoints),
@@ -95,20 +139,20 @@ app.get('/', function (req, res) {
                 berserkerPoints: formatNumber(berserkerPoints),
                 firebugPoints: formatNumber(firebugPoints),
                 demolitionsPoints: formatNumber(demolitionsPoints),
-                sharpshooterProgress: "2%",
-                commandoProgress: "2%",
-                supportProgress: "2%",
-                berserkerProgress: "2%",
-                firebugProgress: "2%",
-                medicProgress: "2%",
-                demolitionsProgress: "2%",
-                medicLevel: getPerkLevel("medic", medicPoints),
-                sharpshooterLevel: getPerkLevel("sharpshooter", sharpshooterPoints),
-                supportLevel: getPerkLevel("support", supportPoints),
-                commandoLevel: getPerkLevel("commando", commandoPoints),
-                berserkerLevel: getPerkLevel("berserker", berserkerPoints),
-                firebugLevel: getPerkLevel("firebug", firebugPoints),
-                demolitionsLevel: getPerkLevel("demolitions", demolitionsPoints)
+                sharpshooterProgress: getLevelProgress("sharpshooter",sharpshooterLevel,sharpshooterPoints),
+                commandoProgress: getLevelProgress("commando",commandoLevel,commandoPoints),
+                supportProgress: getLevelProgress("support",supportLevel,supportPoints),
+                berserkerProgress: getLevelProgress("berserker",berserkerLevel,berserkerPoints),
+                firebugProgress: getLevelProgress("firebug",firebugLevel,firebugPoints),
+                medicProgress: getLevelProgress("medic",medicLevel,medicPoints),
+                demolitionsProgress: getLevelProgress("demolitions",demolitionsLevel,demolitionsPoints),
+                medicLevel: medicLevel,
+                sharpshooterLevel: sharpshooterLevel,
+                supportLevel: supportLevel,
+                commandoLevel: commandoLevel,
+                berserkerLevel: berserkerLevel,
+                firebugLevel: firebugLevel,
+                demolitionsLevel: demolitionsLevel
             })
         })
 });
