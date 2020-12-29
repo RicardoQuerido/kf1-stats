@@ -38,8 +38,8 @@ getPerkLevel = (perkName, primaryPoints, secondaryPoints = null) => {
     let perkLevel = maxLevel;
     const primarySteps = perksInfo[perkName].primarySteps;
 
-    for (level = 0; level < primarySteps.length; level++) {
-        if (primarySteps[level] < primaryPoints) continue;
+    for (let level = 0; level < primarySteps.length; level++) {
+        if (primarySteps[level] <= primaryPoints) continue;
         if (!secondaryPoints) return level;
         perkLevel = level;
         break;
@@ -48,7 +48,7 @@ getPerkLevel = (perkName, primaryPoints, secondaryPoints = null) => {
     if (secondaryPoints) {
         const secondarySteps = perksInfo[perkName].primarySteps;
         while (perkLevel >= minLevel) {
-            if (secondarySteps[perkLevel] < secondaryPoints) break;
+            if (secondarySteps[perkLevel] <= secondaryPoints) break;
             perkLevel -= 1;
         }
     }
