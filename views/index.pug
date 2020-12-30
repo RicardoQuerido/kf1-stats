@@ -25,17 +25,6 @@ html
             p.perk__points="Points Healed: " + medicPoints
       div
         div.perk__img
-          img(src="images/perks/Perk_Support_specialist.png" alt="Perk Support Specialist")
-        div.perk__info
-          div.perk__header
-            span.perk__name Support Specialist
-            span.perk__level="Level " + supportLevel
-          div.perk__content
-            div.perk__bar
-              div.perk__progress(style={width:supportProgress+"%"})
-            p.perk__points="Damage Done: " + supportPoints
-      div
-        div.perk__img
           img(src="images/perks/Perk_Sharpshooter.png" alt="Perk Sharpshooter")
         div.perk__info
           div.perk__header
@@ -47,6 +36,20 @@ html
             p.perk__points="Headshots: " + sharpshooterPoints
       div
         div.perk__img
+          img(src="images/perks/Perk_Support_specialist.png" alt="Perk Support Specialist")
+        div.perk__info
+          div.perk__header
+            span.perk__name Support Specialist
+            span.perk__level="Level " + supportLevel
+          div.perk__content
+            div.perk__bar
+              div.perk__progress(style={width:supportProgress+"%"})
+            p.perk__points="Damage Done: " + supportPoints
+            div.perk__bar
+              div.perk__progress(style={width:weldingProgress+"%"})
+            p.perk__points="Welding Points: " + weldingPoints
+      div
+        div.perk__img
           img(src="images/perks/Perk_Commando.png" alt="Perk Commando")
         div.perk__info
           div.perk__header
@@ -56,6 +59,9 @@ html
             div.perk__bar
               div.perk__progress(style={width:commandoProgress+"%"})
             p.perk__points="Damage Done: " + commandoPoints
+            div.perk__bar
+              div.perk__progress(style={width:stalkerProgress+"%"})
+            p.perk__points="Stalker Kills: " + stalkerPoints
       div
         div.perk__img
           img(src="images/perks/Perk_Berserker.png" alt="Perk Berserker")
