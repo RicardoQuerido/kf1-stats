@@ -104,7 +104,7 @@ calculateBarProgress = (perkName, isSecondary = false) => {
 }
 
 //----------------- INDEX PAGE ---------------------------
-createIndexArgs = () => {
+createPlayerArgs = (id) => {
     const indexArgs = {};
     perkLevelsInfo.sharpshooter.points = playerStats.headshotkills;
     perkLevelsInfo.medic.points = playerStats.damagehealed;
@@ -129,6 +129,8 @@ createIndexArgs = () => {
         }
     }
 
+    indexArgs['player'] = id;
+
     return indexArgs;
 }
 
@@ -147,10 +149,10 @@ let parserOptions = {
     object: true
 };
 
-app.get('/', function (req, res) {
-    console.log("New connection!");
+app.get('/player/:steamid', function (req, res) {
+    const player = req.params.steamid;
 
-    axios.get('https://steamcommunity.com/id/frostheart21/statsfeed/1250/')
+    axios.get(`https://steamcommunity.com/id/${player}/statsfeed/1250/`)
         .then(d => {
             const info = parser.toJson(d.data, parserOptions);
             const stats = info.statsfeed.stats.item;
@@ -162,13 +164,13 @@ app.get('/', function (req, res) {
             }
 
             for (let i = 0; i < achievements.length; i++) {
-                const currentAchievment = achievements[i];
-                playerAchievements[currentAchievment.APIName] = currentAchievment.value;
+                const currentAchievement = achievements[i];
+                playerAchievements[currentAchievement.APIName] = currentAchievement.value;
             }
 
-            const indexArgs = createIndexArgs();
+            const playerArgs = createPlayerArgs(player);
 
-            res.render('index', indexArgs);
+            res.render('player', playerArgs);
         })
 });
 

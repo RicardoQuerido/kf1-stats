@@ -5,16 +5,16 @@ html
     meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
     meta(name="theme-color", content="#000000")
     title KF1 Stats
-    link(rel="stylesheet" href="styles/index.css")
+    link(rel="stylesheet" href="../styles/player.css")
   body
-    h1 My Killing Floor Stats
+    h1=player + "'s Killing Floor Stats"
     hr
     section.perks
       h2 Perk Progress
       hr
       div
         div.perk__img
-          img(src="images/perks/Perk_Medic.png" alt="Perk Field Medic")
+          img(src="../images/perks/Perk_Medic.png" alt="Perk Field Medic")
         div.perk__info
           div.perk__header
             span.perk__name Field Medic
@@ -25,7 +25,7 @@ html
             p.perk__points="Points Healed: " + medicPoints
       div
         div.perk__img
-          img(src="images/perks/Perk_Sharpshooter.png" alt="Perk Sharpshooter")
+          img(src="../images/perks/Perk_Sharpshooter.png" alt="Perk Sharpshooter")
         div.perk__info
           div.perk__header
             span.perk__name Sharpshooter
@@ -36,7 +36,7 @@ html
             p.perk__points="Headshots: " + sharpshooterPoints
       div
         div.perk__img
-          img(src="images/perks/Perk_Support_specialist.png" alt="Perk Support Specialist")
+          img(src="../images/perks/Perk_Support_specialist.png" alt="Perk Support Specialist")
         div.perk__info
           div.perk__header
             span.perk__name Support Specialist
@@ -50,7 +50,7 @@ html
             p.perk__points="Welding Points: " + supportSecondaryPoints
       div
         div.perk__img
-          img(src="images/perks/Perk_Commando.png" alt="Perk Commando")
+          img(src="../images/perks/Perk_Commando.png" alt="Perk Commando")
         div.perk__info
           div.perk__header
             span.perk__name Commando
@@ -64,7 +64,7 @@ html
             p.perk__points="Stalker Kills: " + commandoSecondaryPoints
       div
         div.perk__img
-          img(src="images/perks/Perk_Berserker.png" alt="Perk Berserker")
+          img(src="../images/perks/Perk_Berserker.png" alt="Perk Berserker")
         div.perk__info
           div.perk__header
             span.perk__name Berserker
@@ -75,7 +75,7 @@ html
             p.perk__points="Damage Done: " + berserkerPoints
       div
         div.perk__img
-          img(src="images/perks/Perk_Firebug.png" alt="Perk Firebug")
+          img(src="../images/perks/Perk_Firebug.png" alt="Perk Firebug")
         div.perk__info
           div.perk__header
             span.perk__name Firebug
@@ -86,7 +86,7 @@ html
             p.perk__points="Damage Done: " + firebugPoints
       div
         div.perk__img
-          img(src="images/perks/Perk_Demolition.png" alt="Perk Demolitions")
+          img(src="../images/perks/Perk_Demolition.png" alt="Perk Demolitions")
         div.perk__info
           div.perk__header
             span.perk__name Demolitions
