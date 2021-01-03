@@ -1,0 +1,16 @@
+html
+  head
+    meta(charset="utf-8")
+    link(rel="shortcut icon", href="/favicon.ico")
+    meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    meta(name="theme-color", content="#000000")
+    title KF1 Stats
+    link(rel="stylesheet" href="../styles/index.css")
+  body
+    div.wrapper
+        h1 Killing Floor 1 Stats
+        hr
+        h3 Paste your steam ID in the box below!
+        form(action="searchPlayer", method="post")
+            input(type="text" placeholder="Steam ID" name="steamId")
+            input(type="submit")

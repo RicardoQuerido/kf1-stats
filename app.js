@@ -1,4 +1,5 @@
 const express = require('express');
+const { body, validationResult } = require('express-validator');
 const axios = require('axios');
 const parser = require('xml2json');
 const format = require('format-number');
@@ -125,7 +126,7 @@ createPlayerArgs = (id) => {
         indexArgs[`${currentPerk}Progress`] = calculateBarProgress(currentPerk);
         if (currentPerkInfo.secondaryPoints) {
             indexArgs[`${currentPerk}SecondaryPoints`] = formatNumber(currentPerkInfo.secondaryPoints);
-            indexArgs[`${currentPerk}SecondaryProgress`] = calculateBarProgress(currentPerk,true);
+            indexArgs[`${currentPerk}SecondaryProgress`] = calculateBarProgress(currentPerk, true);
         }
     }
 
@@ -142,12 +143,29 @@ let port = 3000;
 app.set("views", path.join(__dirname, "views"));
 app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({
+    extended: true
+}))
 
 const formatNumber = format();
 
 let parserOptions = {
     object: true
 };
+
+app.get('/', function (req, res) {
+    res.render('index');
+});
+
+app.post('/searchPlayer', body('steamId').not().isEmpty().trim().escape(), (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() }); //TODO: change
+    }
+    const steamId = req.body.steamId;
+
+    res.redirect(`/player/${steamId}`);
+});
 
 app.get('/player/:steamid', function (req, res) {
     const player = req.params.steamid;
