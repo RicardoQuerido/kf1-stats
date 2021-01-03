@@ -3,9 +3,6 @@ const axios = require('axios');
 const parser = require('xml2json');
 const format = require('format-number');
 const path = require("path");
-const {
-    info
-} = require('console');
 
 //----------------- PLAYER STATS PROCESSING ----------------------
 const playerStats = {}
@@ -18,36 +15,54 @@ const playerAchievements = {}
 //----------------- PERK LEVEL PROCESSING ------------------------
 const perkLevelsInfo = {
     "medic": {
-        primarySteps: [200, 750, 4000, 12000, 25000, 100000]
+        primarySteps: [200, 750, 4000, 12000, 25000, 100000],
+        points: 0,
+        level: 0
     },
     "sharpshooter": {
-        primarySteps: [30, 100, 700, 2500, 5500, 8500]
+        primarySteps: [30, 100, 700, 2500, 5500, 8500],
+        points: 0,
+        level: 0
     },
     "commando": {
         primarySteps: [25000, 100000, 500000, 1500000, 3500000, 5500000],
-        secondarySteps: [30, 100, 350, 1200, 2400, 3600]
+        secondarySteps: [30, 100, 350, 1200, 2400, 3600],
+        points: 0,
+        secondaryPoints: 0,
+        level: 0
     },
     "support": {
         primarySteps: [25000, 100000, 500000, 1500000, 3500000, 5500000],
-        secondarySteps: [2000, 7000, 35000, 120000, 250000, 370000]
+        secondarySteps: [2000, 7000, 35000, 120000, 250000, 370000],
+        points: 0,
+        secondaryPoints: 0,
+        level: 0
     },
     "firebug": {
-        primarySteps: [25000, 100000, 500000, 1500000, 3500000, 5500000]
+        primarySteps: [25000, 100000, 500000, 1500000, 3500000, 5500000],
+        points: 0,
+        level: 0
     },
     "demolitions": {
-        primarySteps: [25000, 100000, 500000, 1500000, 3500000, 5500000]
+        primarySteps: [25000, 100000, 500000, 1500000, 3500000, 5500000],
+        points: 0,
+        level: 0
     },
     "berserker": {
-        primarySteps: [25000, 100000, 500000, 1500000, 3500000, 5500000]
+        primarySteps: [25000, 100000, 500000, 1500000, 3500000, 5500000],
+        points: 0,
+        level: 0
     }
 }
 
 const minLevel = 0,
     maxLevel = 6;
 
-getPerkLevel = (perkName, primaryPoints, secondaryPoints = null) => {
+calculatePerkLevel = (perkName) => {
     let perkLevel = maxLevel;
     const primarySteps = perkLevelsInfo[perkName].primarySteps;
+    const primaryPoints = perkLevelsInfo[perkName].points;
+    const secondaryPoints = perkLevelsInfo[perkName].secondaryPoints;
 
     for (let level = 0; level < primarySteps.length; level++) {
         if (primarySteps[level] <= primaryPoints) continue;
@@ -67,78 +82,51 @@ getPerkLevel = (perkName, primaryPoints, secondaryPoints = null) => {
     return perkLevel;
 }
 
-getLevelProgress = (perkName, level, primaryPoints, secondaryPoints = null) => {
-    let progress = 0;
+calculateBarProgress = (perkName, isSecondary = false) => {
+    const currentPerk = perkLevelsInfo[perkName];
+    const level = currentPerk.level;
 
     if (level === 6) return 100; //TODO: view formula for this case
 
-    const primarySteps = perkLevelsInfo[perkName].primarySteps;
+    const steps = isSecondary ? currentPerk.secondarySteps : currentPerk.primarySteps;
+    const points = isSecondary ? currentPerk.secondaryPoints : currentPerk.points;
     let currentLevelPoints, nextLevelPoints;
 
     if (level === 0) {
         currentLevelPoints = 0;
-        nextLevelPoints = primarySteps[0];
+        nextLevelPoints = steps[0];
     } else {
-        currentLevelPoints = primarySteps[level - 1];
-        nextLevelPoints = primarySteps[level];
+        currentLevelPoints = steps[level - 1];
+        nextLevelPoints = steps[level];
     }
 
-    progress += (primaryPoints - currentLevelPoints) / (nextLevelPoints - currentLevelPoints)
-
-    if (secondaryPoints) {
-        const secondarySteps = perkLevelsInfo[perkName].secondarySteps;
-        if (level === 0) {
-            currentLevelPoints = 0;
-            nextLevelPoints = secondarySteps[0];
-        } else {
-            currentLevelPoints = secondarySteps[level - 1];
-            nextLevelPoints = secondarySteps[level];
-        }
-        const secondaryProgress = (secondaryPoints - currentLevelPoints) / (nextLevelPoints - currentLevelPoints);
-        return [progress * 100, secondaryProgress * 100];
-    }
-
-    return [progress * 100, null];
+    return Math.min((points - currentLevelPoints) / (nextLevelPoints - currentLevelPoints) * 100, 100);
 }
 
 //----------------- INDEX PAGE ---------------------------
 createIndexArgs = () => {
     const indexArgs = {};
-    const playerInfo = {
-        "sharpshooter": {
-            "points":playerStats.headshotkills
-        },
-        "medic": {
-            "points":playerStats.damagehealed
-        },
-        "commando": {
-            "points":playerStats.bullpupdamage,
-            "secondaryPoints":playerStats.stalkerkills
-        },
-        "support": {
-            "points":playerStats.shotgundamage,
-            "secondaryPoints":playerStats.weldingpoints
-        },
-        "berserker": {
-            "points":playerStats.meleedamage
-        },
-        "firebug": {
-            "points":playerStats.flamethrowerdamage
-        },
-        "demolitions": {
-            "points":playerStats.explosivesdamage
-        },
-    };
+    perkLevelsInfo.sharpshooter.points = playerStats.headshotkills;
+    perkLevelsInfo.medic.points = playerStats.damagehealed;
+    perkLevelsInfo.commando.points = playerStats.bullpupdamage;
+    perkLevelsInfo.commando.secondaryPoints = playerStats.stalkerkills;
+    perkLevelsInfo.support.points = playerStats.shotgundamage;
+    perkLevelsInfo.support.secondaryPoints = playerStats.weldingpoints;
+    perkLevelsInfo.berserker.points = playerStats.meleedamage;
+    perkLevelsInfo.firebug.points = playerStats.flamethrowerdamage;
+    perkLevelsInfo.demolitions.points = playerStats.explosivesdamage;
 
-    for(const [currentPerk, currentPerkInfo] of Object.entries(playerInfo)) {
-        const level = getPerkLevel(currentPerk, currentPerkInfo["points"], currentPerkInfo["secondaryPoints"]);
-        const [progress, secondaryProgress] = getLevelProgress(currentPerk, level, currentPerkInfo["points"], currentPerkInfo["secondaryPoints"]);
-        
-        indexArgs[`${currentPerk}Points`] = formatNumber(currentPerkInfo["points"]);
-        indexArgs[`${currentPerk}SecondaryPoints`] = formatNumber(currentPerkInfo["secondaryPoints"]);
+    for (const [currentPerk, currentPerkInfo] of Object.entries(perkLevelsInfo)) {
+        const level = calculatePerkLevel(currentPerk);
+        currentPerkInfo.level = level;
+
+        indexArgs[`${currentPerk}Points`] = formatNumber(currentPerkInfo.points);
         indexArgs[`${currentPerk}Level`] = level;
-        indexArgs[`${currentPerk}Progress`] = progress;
-        indexArgs[`${currentPerk}SecondaryProgress`] = secondaryProgress;
+        indexArgs[`${currentPerk}Progress`] = calculateBarProgress(currentPerk);
+        if (currentPerkInfo.secondaryPoints) {
+            indexArgs[`${currentPerk}SecondaryPoints`] = formatNumber(currentPerkInfo.secondaryPoints);
+            indexArgs[`${currentPerk}SecondaryProgress`] = calculateBarProgress(currentPerk,true);
+        }
     }
 
     return indexArgs;
