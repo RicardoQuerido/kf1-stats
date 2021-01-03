@@ -3,6 +3,9 @@ const axios = require('axios');
 const parser = require('xml2json');
 const format = require('format-number');
 const path = require("path");
+const {
+    info
+} = require('console');
 
 //----------------- PLAYER STATS PROCESSING ----------------------
 const playerStats = {}
@@ -95,9 +98,51 @@ getLevelProgress = (perkName, level, primaryPoints, secondaryPoints = null) => {
         return [progress * 100, secondaryProgress * 100];
     }
 
-    return progress * 100;
+    return [progress * 100, null];
 }
 
+//----------------- INDEX PAGE ---------------------------
+createIndexArgs = () => {
+    const indexArgs = {};
+    const playerInfo = {
+        "sharpshooter": {
+            "points":playerStats.headshotkills
+        },
+        "medic": {
+            "points":playerStats.damagehealed
+        },
+        "commando": {
+            "points":playerStats.bullpupdamage,
+            "secondaryPoints":playerStats.stalkerkills
+        },
+        "support": {
+            "points":playerStats.shotgundamage,
+            "secondaryPoints":playerStats.weldingpoints
+        },
+        "berserker": {
+            "points":playerStats.meleedamage
+        },
+        "firebug": {
+            "points":playerStats.flamethrowerdamage
+        },
+        "demolitions": {
+            "points":playerStats.explosivesdamage
+        },
+    };
+
+    for(const [currentPerk, currentPerkInfo] of Object.entries(playerInfo)) {
+        const level = getPerkLevel(currentPerk, currentPerkInfo["points"], currentPerkInfo["secondaryPoints"]);
+        const [progress, secondaryProgress] = getLevelProgress(currentPerk, level, currentPerkInfo["points"], currentPerkInfo["secondaryPoints"]);
+        
+        indexArgs[`${currentPerk}Points`] = formatNumber(currentPerkInfo["points"]);
+        indexArgs[`${currentPerk}SecondaryPoints`] = formatNumber(currentPerkInfo["secondaryPoints"]);
+        indexArgs[`${currentPerk}Level`] = level;
+        indexArgs[`${currentPerk}Progress`] = progress;
+        indexArgs[`${currentPerk}SecondaryProgress`] = secondaryProgress;
+    }
+
+    return indexArgs;
+}
 
 
 //----------------- CONFIG N LISTEN ----------------------
@@ -133,54 +178,9 @@ app.get('/', function (req, res) {
                 playerAchievements[currentAchievment.APIName] = currentAchievment.value;
             }
 
-            const sharpshooterPoints = playerStats.headshotkills;
-            const medicPoints = playerStats.damagehealed;
-            const commandoPoints = playerStats.bullpupdamage;
-            const stalkerPoints = playerStats.stalkerkills;
-            const supportPoints = playerStats.shotgundamage;
-            const weldingPoints = playerStats.weldingpoints;
-            const berserkerPoints = playerStats.meleedamage;
-            const firebugPoints = playerStats.flamethrowerdamage;
-            const demolitionsPoints = playerStats.explosivesdamage;
+            const indexArgs = createIndexArgs();
 
-            const medicLevel = getPerkLevel("medic", medicPoints);
-            const sharpshooterLevel = getPerkLevel("sharpshooter", sharpshooterPoints);
-            const supportLevel = getPerkLevel("support", supportPoints, weldingPoints);
-            const commandoLevel = getPerkLevel("commando", commandoPoints, stalkerPoints);
-            const berserkerLevel = getPerkLevel("berserker", berserkerPoints);
-            const firebugLevel = getPerkLevel("firebug", firebugPoints);
-            const demolitionsLevel = getPerkLevel("demolitions", demolitionsPoints);
-
-            const [commandoProgress, stalkerProgress] = getLevelProgress("commando", commandoLevel, commandoPoints, stalkerPoints);
-            const [supportProgress, weldingProgress] = getLevelProgress("support", supportLevel, supportPoints, weldingPoints);
-
-            res.render('index', {
-                sharpshooterPoints: formatNumber(sharpshooterPoints),
-                medicPoints: formatNumber(medicPoints),
-                commandoPoints: formatNumber(commandoPoints),
-                stalkerPoints: formatNumber(stalkerPoints),
-                supportPoints: formatNumber(supportPoints),
-                weldingPoints: formatNumber(weldingPoints),
-                berserkerPoints: formatNumber(berserkerPoints),
-                firebugPoints: formatNumber(firebugPoints),
-                demolitionsPoints: formatNumber(demolitionsPoints),
-                sharpshooterProgress: getLevelProgress("sharpshooter", sharpshooterLevel, sharpshooterPoints),
-                commandoProgress,
-                stalkerProgress,
-                supportProgress,
-                weldingProgress,
-                berserkerProgress: getLevelProgress("berserker", berserkerLevel, berserkerPoints),
-                firebugProgress: getLevelProgress("firebug", firebugLevel, firebugPoints),
-                medicProgress: getLevelProgress("medic", medicLevel, medicPoints),
-                demolitionsProgress: getLevelProgress("demolitions", demolitionsLevel, demolitionsPoints),
-                medicLevel,
-                sharpshooterLevel,
-                supportLevel,
-                commandoLevel,
-                berserkerLevel,
-                firebugLevel,
-                demolitionsLevel
-            })
+            res.render('index', indexArgs);
         })
 });
 
