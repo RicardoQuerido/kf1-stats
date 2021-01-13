@@ -10,7 +10,7 @@ body {
     background-attachment: fixed;
     background-image: url("../images/background.jpg");
     background-color: grey;
-    background-blend-mode: darken;   
+    background-blend-mode: darken;
     color: whitesmoke;
 }
 
@@ -48,7 +48,7 @@ hr {
     flex-wrap: wrap;
 }
 
-.perks > div {
+.perks>div {
     flex: 0 1 45%;
     padding: 0.75em;
     margin: 1em auto;
@@ -90,15 +90,44 @@ hr {
 }
 
 .perk__bar {
+    position: relative;
     border: 3px solid #101010;
     border-radius: 5px;
     background-color: #101010;
     width: 100%;
     height: 2em;
+
 }
 
 .perk__progress {
     background-color: #838182;
-    width:0;
+    width: 0;
     height: 100%;
+    transition: background-color 300ms;
+}
+
+.perk__bar:hover .perk__progress {
+    background-color: #a59da1;
+}
+
+
+.perk__tooltip {
+    visibility: hidden;
+    opacity: 0;
+
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    padding: 0.25rem;
+
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: bold;
+    transition: opacity 300ms;
+}
+
+.perk__bar:hover .perk__tooltip {
+    visibility: visible;
+    opacity:1;
+    
 }

@@ -22,6 +22,7 @@ html
           div.perk__content
             div.perk__bar
               div.perk__progress(style={width:medicProgress+"%"})
+              div.perk__tooltip(style={right:100-medicProgress+"%"})=medicProgress+"%"
             p.perk__points="Points Healed: " + medicPoints
       div
         div.perk__img
@@ -33,6 +34,7 @@ html
           div.perk__content
             div.perk__bar
               div.perk__progress(style={width:sharpshooterProgress+"%"})
+              div.perk__tooltip(style={right:100-sharpshooterProgress+"%"})=sharpshooterProgress+"%"
             p.perk__points="Headshots: " + sharpshooterPoints
       div
         div.perk__img
@@ -44,9 +46,11 @@ html
           div.perk__content
             div.perk__bar
               div.perk__progress(style={width:supportProgress+"%"})
+              div.perk__tooltip(style={right:100-supportProgress+"%"})=supportProgress+"%"
             p.perk__points="Damage Done: " + supportPoints
             div.perk__bar
               div.perk__progress(style={width:supportSecondaryProgress+"%"})
+              div.perk__tooltip(style={right:100-supportSecondaryProgress+"%"})=supportSecondaryProgress+"%"
             p.perk__points="Welding Points: " + supportSecondaryPoints
       div
         div.perk__img
@@ -58,9 +62,11 @@ html
           div.perk__content
             div.perk__bar
               div.perk__progress(style={width:commandoProgress+"%"})
+              div.perk__tooltip(style={right:100-commandoProgress+"%"})=commandoProgress+"%"
             p.perk__points="Damage Done: " + commandoPoints
             div.perk__bar
               div.perk__progress(style={width:commandoSecondaryProgress+"%"})
+              div.perk__tooltip(style={right:100-commandoSecondaryProgress+"%"})=commandoSecondaryProgress+"%"
             p.perk__points="Stalker Kills: " + commandoSecondaryPoints
       div
         div.perk__img
@@ -72,6 +78,7 @@ html
           div.perk__content
             div.perk__bar
               div.perk__progress(style={width:berserkerProgress+"%"})
+              div.perk__tooltip(style={right:100-berserkerProgress+"%"})=berserkerProgress+"%"
             p.perk__points="Damage Done: " + berserkerPoints
       div
         div.perk__img
@@ -83,6 +90,7 @@ html
           div.perk__content
             div.perk__bar
               div.perk__progress(style={width:firebugProgress+"%"})
+              div.perk__tooltip(style={right:100-firebugProgress+"%"})=firebugProgress+"%"
             p.perk__points="Damage Done: " + firebugPoints
       div
         div.perk__img
@@ -94,6 +102,7 @@ html
           div.perk__content
             div.perk__bar
               div.perk__progress(style={width:demolitionsProgress+"%"})
+              div.perk__tooltip(style={right:100-demolitionsProgress+"%"})=demolitionsProgress+"%"
             p.perk__points="Damage Done: " + demolitionsPoints
     section.stats
      h2 General Stats

@@ -101,7 +101,7 @@ calculateBarProgress = (perkName, isSecondary = false) => {
         nextLevelPoints = steps[level];
     }
 
-    return Math.min((points - currentLevelPoints) / (nextLevelPoints - currentLevelPoints) * 100, 100);
+    return parseInt(Math.min((points - currentLevelPoints) / (nextLevelPoints - currentLevelPoints) * 100, 100));
 }
 
 //----------------- INDEX PAGE ---------------------------
